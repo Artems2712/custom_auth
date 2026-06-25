@@ -1,0 +1,114 @@
+### Health
+GET http://localhost:8000/api/health/
+
+### Login admin
+POST http://localhost:8000/api/auth/login/
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "Admin123!"
+}
+
+### Login manager
+POST http://localhost:8000/api/auth/login/
+Content-Type: application/json
+
+{
+  "email": "manager@example.com",
+  "password": "Manager123!"
+}
+
+### Login user
+POST http://localhost:8000/api/auth/login/
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "User123!"
+}
+
+### Register new user
+POST http://localhost:8000/api/auth/register/
+Content-Type: application/json
+
+{
+  "last_name": "Сидоров",
+  "first_name": "Сидор",
+  "middle_name": "Сидорович",
+  "email": "new-user@example.com",
+  "password": "User12345!",
+  "password_repeat": "User12345!"
+}
+
+### Me
+GET http://localhost:8000/api/users/me/
+Authorization: Bearer {{access_token}}
+
+### Update me
+PATCH http://localhost:8000/api/users/me/
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "first_name": "Артем"
+}
+
+### Soft delete me
+DELETE http://localhost:8000/api/users/me/
+Authorization: Bearer {{access_token}}
+
+### Logout
+POST http://localhost:8000/api/auth/logout/
+Authorization: Bearer {{access_token}}
+
+### Refresh access token
+POST http://localhost:8000/api/auth/refresh/
+Content-Type: application/json
+
+{
+  "refresh_token": "{{refresh_token}}"
+}
+
+### Documents: user can read
+GET http://localhost:8000/api/business/documents/
+Authorization: Bearer {{access_token}}
+
+### Documents: manager can create
+POST http://localhost:8000/api/business/documents/
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "title": "Новый mock-документ"
+}
+
+### Reports: user gets 403, manager/admin gets 200
+GET http://localhost:8000/api/business/reports/
+Authorization: Bearer {{access_token}}
+
+### Admin access rules: admin only
+GET http://localhost:8000/api/admin/access/rules/
+Authorization: Bearer {{admin_access_token}}
+
+### Grant user role permission reports:read
+POST http://localhost:8000/api/admin/access/permissions/
+Authorization: Bearer {{admin_access_token}}
+Content-Type: application/json
+
+{
+  "role_code": "user",
+  "resource_code": "reports",
+  "action_code": "read",
+  "is_allowed": true
+}
+
+### Assign manager role to user id 3
+POST http://localhost:8000/api/admin/access/user-roles/
+Authorization: Bearer {{admin_access_token}}
+Content-Type: application/json
+
+{
+  "user_id": 3,
+  "role_code": "manager"
+}
